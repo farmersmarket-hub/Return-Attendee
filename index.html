@@ -107,7 +107,7 @@
 			
 			<div class="mb-4">
                 <label>Attendee ID <span style='color: red;'>*</span></label>
-                <input type="text" id="attendeeid" name="attendeeId" class="w-full p-2 border rounded bg-white" required onblur="fetchNeighborId()">
+                <input type="text" id="attendeeid" name="attendeeId" class="w-full p-2 border rounded bg-white" required oninput="fetchNeighborId()">
             </div>
             
             <div class="mb-4">
@@ -251,21 +251,25 @@
 			.catch(err => console.error("Fetch error", err));
 		}
 
-		function calculateSnapDouble() {
-		  const snapInput = document.getElementById('snap');
-		  const snapDouble = document.getElementById('snapDouble');
-		  const tokensField = document.getElementById('tokens');
-
-		  const value = parseFloat(snapInput.value.replace(/[^0-9.]/g, ''));
-		  if (!isNaN(value)) {
-			const double = (value * 2).toFixed(2);
-			snapDouble.value = `$${double}`;
-			tokensField.value = Math.floor(double / 5);
-		  } else {
-			snapDouble.value = '';
-			tokensField.value = '';
-		  }
-		}
+		document.addEventListener('DOMContentLoaded', function () {
+		  window.calculateSnapDouble = function () {
+		    const snapInput = document.getElementById('snap');
+		    const snapDouble = document.getElementById('snapDouble');
+		    const tokensField = document.getElementById('tokens');
+		
+		    if (!snapInput || !snapDouble || !tokensField) return;
+		
+		    const value = parseFloat(snapInput.value.replace(/[^0-9.]/g, ''));
+		    if (!isNaN(value)) {
+		      const double = (value * 2).toFixed(2);
+		      snapDouble.value = `$${double}`;
+		      tokensField.value = Math.floor(double / 5);
+		    } else {
+		      snapDouble.value = '';
+		      tokensField.value = '';
+		    }
+		  };
+		});
 		
 		function storeData(event) {			
 			const form = document.getElementById("returnAttendeeForm");
