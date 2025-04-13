@@ -271,8 +271,7 @@
 			});
 		}
 
-		document.addEventListener('DOMContentLoaded', function () {
-		  window.calculateSnapDouble = function () { debugger;
+		function calculateSnapDouble(input) { debugger;
 		    const snapInput = document.getElementById('snap');
 		    const snapDouble = document.getElementById('snapDouble');
 		    const tokensField = document.getElementById('tokens');
@@ -288,8 +287,7 @@
 		      snapDouble.value = '';
 		      tokensField.value = '';
 		    }
-		  };
-		});
+		  }
 		
 		function storeData(event) {			
 			const form = document.getElementById("returnAttendeeForm");
