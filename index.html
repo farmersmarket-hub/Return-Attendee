@@ -107,12 +107,21 @@
 			
 			<div class="mb-4">
                 <label>Attendee ID <span style='color: red;'>*</span></label>
-                <input type="text" id="attendeeid" name="attendeeId" class="w-full p-2 border rounded bg-white" required oninput="fetchNeighborId()">
+                <input type="text" id="attendeeid" name="attendeeId" class="w-full p-2 border rounded bg-white" required onchange="fetchNeighborId()">
             </div>
             
             <div class="mb-4">
                 <label>Neighbor ID <span style='color: red;'>*</span></label>
-                <input type="text" id="neighborid" name="neighborid" class="w-full p-2 border rounded bg-white" readonly>
+                <input type="text" id="neighborid" name="neighborid" class="w-full p-2 border rounded bg-white" readonly data-error="Attendee ID not found. Please check and try again.">
+		    <div class="relative">
+		    <input type="text" name="neighborid" id="neighborid" class="w-full p-2 border rounded bg-white pr-10" readonly>
+		    <div id="neighborSpinner" class="absolute right-3 top-2.5 hidden">
+		      <svg class="animate-spin h-5 w-5 text-blue-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+		        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+		        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z"></path>
+		      </svg>
+		    </div>
+		  </div>
             </div>
             
             <div class="mb-4">
@@ -237,18 +246,30 @@
 		function fetchNeighborId() {
 		  const attendeeId = document.getElementById('attendeeid').value;
 		  const scriptUrl = 'https://script.google.com/macros/s/AKfycbxzfQFaCBhz-UNGC9UVqCEq2bjds7oRLUwjz86EV2xhYNx-mK7K397ZP30xZf9Z2U_yWw/exec';
+			const spinner = document.getElementById('neighborSpinner');
+			const neighborInput = document.getElementById('neighborid');
+
+			spinner.classList.remove('hidden');
+  			neighborInput.value = '';
+			neighborInput.setCustomValidity(""); // Clear old error
+ 			neighborInput.reportValidity();      // Reset UI
 
 		  fetch(`${scriptUrl}?attendeeid=${encodeURIComponent(attendeeId)}`)
 			.then(res => res.json())
 			.then(data => {
 			  if (data.neighborId) {
-				document.getElementById('neighborid').value = data.neighborId;
+				neighborInput.value = data.neighborId;
+        			neighborInput.setCustomValidity(""); // Valid
 			  } else {
-				alert("Attendee ID not found.");
-				document.getElementById('neighborid').value = '';
+				neighborInput.value = '';
+        			neighborInput.setCustomValidity(neighborInput.getAttribute('data-error'));
+        			neighborInput.reportValidity();
 			  }
 			})
-			.catch(err => console.error("Fetch error", err));
+			.catch(err => console.error("Fetch error", err))
+			.finally(() => {
+				spinner.classList.add('hidden');
+			});
 		}
 
 		document.addEventListener('DOMContentLoaded', function () {
