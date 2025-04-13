@@ -139,17 +139,17 @@
 			
 			<div class="mb-4">
                 <label>How much of your SNAP balance would you like to use at this market? </label>
-                <input type="text" name="snap" class="currency-input w-full p-2 border rounded bg-white" oninput="validateCurrencyInput(this);" onblur="formatCurrency(this);" onchange="calculateSnapDouble(this);" data-error="Enter amount in format: $000.00">
+                <input type="text" name="snap" id="snap" class="currency-input w-full p-2 border rounded bg-white" oninput="validateCurrencyInput(this);" onblur="formatCurrency(this);" onchange="calculateSnapDouble(this);" data-error="Enter amount in format: $000.00">
             </div>
             
             <div class="mb-4">
                 <label>SNAP Balance + Double Up Bucks </label>
-                <input type="text" name="snapDouble" class="currency-input w-full p-2 border rounded bg-white" readonly>
+                <input type="text" name="snapDouble" id="snapDouble" class="currency-input w-full p-2 border rounded bg-white" readonly>
             </div>
 			
 			<div class="mb-4">
                 <label>No. of Tokens Generated </label>
-                <input type="text" name="tokens" class="w-full p-2 border rounded bg-white" readonly>
+                <input type="text" name="tokens" id="tokens" class="w-full p-2 border rounded bg-white" readonly>
             </div>
             
             <div class="mb-4">
