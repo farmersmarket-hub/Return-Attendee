@@ -140,7 +140,7 @@
 			
 			<div class="mb-4">
                 <label>How much of your SNAP balance would you like to use at this market? </label>
-                <input type="text" name="snap" class="currency-input w-full p-2 border rounded bg-white" oninput="validateCurrencyInput(this); calculateSnapDouble();" onblur="formatCurrency(this); calculateSnapDouble();" data-error="Enter amount in format: $000.00">
+                <input type="text" name="snap" class="currency-input w-full p-2 border rounded bg-white" oninput="validateCurrencyInput(this);" onblur="formatCurrency(this);" onchange="calculateSnapDouble(this);" data-error="Enter amount in format: $000.00">
             </div>
             
             <div class="mb-4">
